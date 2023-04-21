@@ -11,10 +11,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged), [this](int i){
-//            ui->textBrowser->setText(QString("yolo"));
-//        });
-    ui->textBrowser->setText(QString("yolo"));
     ui->textBrowser->setText(extraxt_text());
 
 }
