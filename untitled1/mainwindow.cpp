@@ -4,7 +4,10 @@
 #include <QFile>
 #include <QTextStream>
 #include <QString>
-#include<QDir>
+#include <QDir>
+
+bool NO_OPTI = 1;
+bool OPTI = 0;
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -29,32 +32,55 @@ QString MainWindow::extraxt_text()
        QString numbers;
        QString current_number;
 
-        foreach (QString line, lines)
-        {
-            for (int i = 0; i < line.size(); i++)
-            {
+//       bool choice = OPTI;
 
-                if (line[i].isDigit())
-                {
-                    current_number += line[i];
-                }
-                else if (!current_number.isEmpty())
-                {
-                    int value = current_number.toInt();
-                    if (value >= 0 && value <= 255)
-                    {
+//       if(choice == OPTI)
+//       {
 
 
+           foreach (QString line, lines) {
+               bool found_number = false;
+               QString number_str;
+               for (auto it = line.begin(); it != line.end(); ++it) {
+                   if (it->isDigit()) {
+                       number_str.append(*it);
+                       found_number = true;
+                   } else if (found_number) {
+                       uint8_t value = number_str.toUInt();
+                       numbers += QChar(value);
+                       number_str.clear();
+                       found_number = false;
+                       break;
+                   }
+               }
+           }
+//       }
+//       else{
 
-                        numbers += QString(QChar::fromLatin1(value));
-                        current_number.clear();
-                        break;
-                    }
-                    current_number.clear();
-                }
+//           foreach (QString line, lines)
+//           {
+//               for (uint8_t i = 0; i < line.size(); i++)
+//               {
 
-            }
-        }
+//                   if (line[i].isDigit())
+//                   {
+//                       current_number += line[i];
+//                   }
+//                   else if (!current_number.isEmpty())
+//                   {
+//                       uint8_t value = current_number.toInt();
+//                        numbers += QString(QChar::fromLatin1(value));
+//                           current_number.clear();
+//                           break;
+//                       current_number.clear();
+//                   }
+
+//               }
+//           }
+
+//       }
+
+
 
 
        return numbers;
